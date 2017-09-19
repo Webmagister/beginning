@@ -35,13 +35,13 @@ int main()
     sf::RectangleShape pipe1;
     pipe1.setSize({35, 64});
     pipe1.setPosition({473, 170});
-    pipe1.setFillColor(sf::Color(0x3, 0xb38, 0x38));
+    pipe1.setFillColor(sf::Color(0x3B, 0x38, 0x38));
     window.draw(pipe1);
 
     sf::RectangleShape pipe2;
     pipe2.setSize({58, 41});
     pipe2.setPosition({460, 134});
-    pipe2.setFillColor(sf::Color(0x3, 0xb38, 0x38));
+    pipe2.setFillColor(sf::Color(0x3B, 0x38, 0x38));
     window.draw(pipe2);
 
     sf::CircleShape smoke1(10);
