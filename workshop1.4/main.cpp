@@ -11,18 +11,18 @@ float toDegrees(float radians)
 
 void onMouseClick(const sf::Event::MouseButtonEvent &event, sf::Vector2f &mousePosition, sf::Sprite &sprite)
 {
+    mousePosition = {float(event.x), float(event.y)};
     const sf::Vector2f distance = mousePosition - sprite.getPosition();
     const float angle = fmodf(atan2(distance.y, distance.x) + 2 * M_PI, 2 * M_PI);
     std::cout << "angle=" << toDegrees(angle) << std::endl;
     if ((toDegrees(angle) <= 270) && (toDegrees(angle) >= 90))
     {
-        sprite.setScale(1, 1);
+        sprite.setScale(-1, 1);
     }
     else
     {
-        sprite.setScale(-1, 1);
+        sprite.setScale(1, 1);
     }
-    mousePosition = {float(event.x), float(event.y)};
     std::cout << "mouse x=" << event.x << "mouse y=" << event.y << std::endl;
 }
 

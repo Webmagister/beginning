@@ -4,9 +4,9 @@
 #include <cmath>
 #include <iostream>
 
-void onMouseMove(const sf::Event::MouseMoveEvent& event, sf::Vector2f& mousePosition)
+void onMouseMove(const sf::Event::MouseMoveEvent &event, sf::Vector2f &mousePosition)
 {
-    mousePosition = { float(event.x), float(event.y) };
+    mousePosition = {float(event.x), float(event.y)};
 }
 
 void initArrow(sf::ConvexShape &arrow)
@@ -35,9 +35,9 @@ float lenghtVector(const sf::Vector2f &vector)
     return std::hypotf(vector.x, vector.y);
 }
 
-void update(const sf::Vector2f& mousePosition, sf::ConvexShape &arrow, sf::Clock &clock, sf::Vector2f &position)
+void update(const sf::Vector2f &mousePosition, sf::ConvexShape &arrow, sf::Clock &clock, sf::Vector2f &position)
 {
-    const sf::Vector2f motion = mousePosition - arrow.getPosition(); 
+    const sf::Vector2f motion = mousePosition - arrow.getPosition();
     const sf::Vector2f direction = motion / lenghtVector(motion);
 
     const float dt = clock.restart().asSeconds();
@@ -105,7 +105,7 @@ int main()
 
     sf::Clock clock;
     sf::Vector2f position;
-    
+
     sf::Vector2f mousePosition;
     while (window.isOpen())
     {
