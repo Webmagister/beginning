@@ -6,6 +6,9 @@
 #include <random>
 #include <ctime>
 
+constexpr unsigned WINDOW_WIDTH = 800;
+constexpr unsigned WINDOW_HEIGHT = 600;
+
 struct Ball
 {
     sf::Color color;
@@ -187,21 +190,22 @@ void checkWallCollision(const unsigned WINDOW_WIDTH, const unsigned WINDOW_HEIGH
     }
 }
 
-void update(const unsigned WINDOW_WIDTH, const unsigned WINDOW_HEIGHT, sf::Clock &clock, const float BALL_SIZE, std::vector<Ball> &balls)
+void update(sf::Clock &clock, const float BALL_SIZE, std::vector<Ball> &balls)
 {
-    const float dt = clock.restart().asSeconds();
-    for (float j = 0; j <= dt; j = j + (dt / 5))
+    const unsigned numberOfInterval = 5;
+    const float dt = clock.restart().asSeconds() / numberOfInterval;
+    for (float j = 0; j <= numberOfInterval; ++j)
     {
         checkBallCollision(balls, BALL_SIZE);
         for (size_t i = 0; i < balls.size(); ++i)
         {
             sf::Vector2f position = balls[i].ball.getPosition();
-            balls[i].timer = updateBallLifetimes(balls[i].timer, dt / 5);
+            balls[i].timer = updateBallLifetimes(balls[i].timer, dt);
             auto it = std::remove_if(balls.begin(), balls.end(), removeDeathBalls);
             balls.erase(it, balls.end());
             checkWallCollision(WINDOW_WIDTH, WINDOW_HEIGHT, BALL_SIZE, balls[i].speed, position);
 
-            balls[i].ball.setPosition(position + balls[i].speed * (dt / 5));
+            balls[i].ball.setPosition(position + balls[i].speed * dt);
         }
     }
 }
@@ -209,8 +213,6 @@ void update(const unsigned WINDOW_WIDTH, const unsigned WINDOW_HEIGHT, sf::Clock
 int main()
 {
     constexpr float BALL_SIZE = 40;
-    constexpr unsigned WINDOW_WIDTH = 800;
-    constexpr unsigned WINDOW_HEIGHT = 600;
 
     sf::RenderWindow window(sf::VideoMode({WINDOW_WIDTH, WINDOW_HEIGHT}), "Wave Moving Ball");
     sf::Clock clock;
@@ -220,7 +222,7 @@ int main()
     while (window.isOpen())
     {
         pollEvents(window, balls, BALL_SIZE);
-        update(WINDOW_WIDTH, WINDOW_HEIGHT, clock, BALL_SIZE, balls);
+        update(clock, BALL_SIZE, balls);
         redrawFrame(window, balls);
     }
 }
